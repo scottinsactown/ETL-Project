@@ -31,17 +31,36 @@ CREATE TABLE "Production".hourlytotal(
 );
 select * from "Production".hourlytotal
 
+--Creating table for hourly demand data in demand schema
+--select statement AFTER filling from jupyter notebook to check data
+CREATE TABLE "Demand".hourlydemand(
+	"timestamp" timestamp PRIMARY KEY,
+	"date" date not null,
+	"Hour" int not null,
+    "DEMAND" int
+);
+
+select * from "Demand".hourlydemand
+
+
+--###################################################################
+--MUST BE RAN AFTER TABLES ARE FILLED!!!!!!!-----------------
+--###################################################################
+
+--Creating table "percent production renewable"
 CREATE TABLE "Production".percentproductionrenewable(
 	"Date" timestamp primary key,
 	"Total Production" float,
 	"Renewable Production" float,
 	"Percent Production Renew" float
 );
-
+--altering houlrytotal table to have a total column
 alter table "Production".hourlytotal
 add column "TOTAL PRODUCTION" int;
+--updating the newly made column to be the sum of the other columns
 update "Production".hourlytotal
 set "TOTAL PRODUCTION" = "RENEWABLES"+"NUCLEAR"+"THERMAL"+"HYDRO";
+--Using select statement to insert joined data into percent production table
 insert into "Production".percentproductionrenewable 
 	select r."timestamp" as "Date",
 	sum(t."TOTAL PRODUCTION") as "Total Production",
@@ -53,17 +72,41 @@ insert into "Production".percentproductionrenewable
 	r.timestamp = t.timestamp
 	group by "Date"
 	order by "Date" desc;
+
+--Updating the table to have the percent calculation column
 update "Production".percentproductionrenewable
 set "Percent Production Renew" = "Renewable Production" / "Total Production";
-
+--check if it worked properly 
 select * from "Production".percentproductionrenewable;
 
-CREATE TABLE "Demand".hourlydemand(
-	"timestamp" timestamp PRIMARY KEY,
-	"date" date not null,
-	"Hour" int not null,
-    "DEMAND" int
+
+
+--#############################################################################
+
+
+--Second calculated table "Percent Demand Renewable"
+CREATE TABLE "Production".percentdemandrenewable(
+	"Date" timestamp primary key,
+	"Total Demand" float,
+	"Renewable Production" float,
+	"Percent Demand Renew" float
 );
 
-select * from "Demand".hourlydemand
 
+--filling new table with data from other tables
+insert into "Production".percentdemandrenewable 
+	select r."timestamp" as "Date",
+	sum(d."DEMAND") as "Total Demand",
+	sum(r."TOTAL") as "Renewable Production"
+	from "Production".hourlyrenewable as r
+	left join 
+	"Demand".hourlydemand as d
+	on
+	r.timestamp = d.timestamp
+	group by "Date"
+	order by "Date" desc;
+--created calulated column of percent of demand met by renew	
+update "Production".percentdemandrenewable
+set "Percent Demand Renew" = "Renewable Production" / "Total Demand";
+--make sure it worked 
+select * from "Production".percentdemandrenewable;
