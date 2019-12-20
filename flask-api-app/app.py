@@ -6,7 +6,7 @@ from config import username, password
 import numpy as np 
 
 
-app = Flask(__name__, static_folder="\\static")
+app = Flask(__name__, static_folder='static')
 
 engine = create_engine('postgresql://{}:{}@localhost:5432/California_Energy_DB'.format(username, password))
 
