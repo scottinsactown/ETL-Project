@@ -20,7 +20,7 @@ def home():
 @app.route('/api/renewable_prod/date/<date_str>',defaults={'unit':'MWh'})
 @app.route('/api/renewable_prod/date/<date_str>/<unit>')
 def get_date_data(date_str,unit):
-    sql = '''SELECT * FROM "Production".percentproductionrenewable r
+    sql = '''SELECT * FROM "Comparison".percentproductionrenewable r
              WHERE to_char(r."Date", 'YYYY-MM-DD') = '{}' '''.format(date_str)
     data = pd.read_sql(sql=sql,con=conn)
     if str(unit).upper() in ['GWH','GW','G']:
@@ -40,7 +40,7 @@ def get_range_data(start_date, end_date, unit):
     dates = np.array(pd.date_range(start='{}'.format(start_date),end='{}'.format(end_date)).date)
     for date in dates:
         datee = str(date)
-        sql = '''SELECT * FROM "Production".percentproductionrenewable r
+        sql = '''SELECT * FROM "Comparison".percentproductionrenewable r
                 WHERE to_char(r."Date", 'YYYY-MM-DD') = '{}' '''.format(datee)
         try:
             data = pd.read_sql(sql=sql,con=conn)
@@ -59,7 +59,7 @@ def get_range_data(start_date, end_date, unit):
 @app.route('/api/renewable_demand/date/<date_str>',defaults={'unit':'MWh'})
 @app.route('/api/renewable_demand/date/<date_str>/<unit>')
 def get_date_data_demand(date_str,unit):
-    sql = '''SELECT * FROM "Production".percentdemandrenewable r
+    sql = '''SELECT * FROM "Comparison".percentdemandrenewable r
              WHERE to_char(r."Date", 'YYYY-MM-DD') = '{}' '''.format(date_str)
     data = pd.read_sql(sql=sql,con=conn)
     if str(unit).upper() in ['GWH','GW','G']:
@@ -79,7 +79,7 @@ def get_range_data_demand(start_date, end_date, unit):
     dates = np.array(pd.date_range(start='{}'.format(start_date),end='{}'.format(end_date)).date)
     for date in dates:
         datee = str(date)
-        sql = '''SELECT * FROM "Production".percentdemandrenewable r
+        sql = '''SELECT * FROM "Comparison".percentdemandrenewable r
                 WHERE to_char(r."Date", 'YYYY-MM-DD') = '{}' '''.format(datee)
         try:
             data = pd.read_sql(sql=sql,con=conn)

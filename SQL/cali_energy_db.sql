@@ -48,7 +48,7 @@ select * from "Demand".hourlydemand
 --###################################################################
 
 --Creating table "percent production renewable"
-CREATE TABLE "Production".percentproductionrenewable(
+CREATE TABLE "Comparison".percentproductionrenewable(
 	"Date" timestamp primary key,
 	"Total Production" float,
 	"Renewable Production" float,
@@ -61,7 +61,7 @@ add column "TOTAL PRODUCTION" int;
 update "Production".hourlytotal
 set "TOTAL PRODUCTION" = "RENEWABLES"+"NUCLEAR"+"THERMAL"+"HYDRO";
 --Using select statement to insert joined data into percent production table
-insert into "Production".percentproductionrenewable 
+insert into "Comparison".percentproductionrenewable 
 	select r."timestamp" as "Date",
 	sum(t."TOTAL PRODUCTION") as "Total Production",
 	sum(r."TOTAL") as "Renewable Production"
@@ -74,10 +74,10 @@ insert into "Production".percentproductionrenewable
 	order by "Date" desc;
 
 --Updating the table to have the percent calculation column
-update "Production".percentproductionrenewable
+update "Comparison".percentproductionrenewable
 set "Percent Production Renew" = "Renewable Production" / "Total Production";
 --check if it worked properly 
-select * from "Production".percentproductionrenewable;
+select * from "Comparison".percentproductionrenewable;
 
 
 
@@ -85,7 +85,7 @@ select * from "Production".percentproductionrenewable;
 
 
 --Second calculated table "Percent Demand Renewable"
-CREATE TABLE "Production".percentdemandrenewable(
+CREATE TABLE "Comparison".percentdemandrenewable(
 	"Date" timestamp primary key,
 	"Total Demand" float,
 	"Renewable Production" float,
@@ -94,7 +94,7 @@ CREATE TABLE "Production".percentdemandrenewable(
 
 
 --filling new table with data from other tables
-insert into "Production".percentdemandrenewable 
+insert into "Comparison".percentdemandrenewable 
 	select r."timestamp" as "Date",
 	sum(d."DEMAND") as "Total Demand",
 	sum(r."TOTAL") as "Renewable Production"
@@ -106,7 +106,7 @@ insert into "Production".percentdemandrenewable
 	group by "Date"
 	order by "Date" desc;
 --created calulated column of percent of demand met by renew	
-update "Production".percentdemandrenewable
+update "Comparison".percentdemandrenewable
 set "Percent Demand Renew" = "Renewable Production" / "Total Demand";
 --make sure it worked 
-select * from "Production".percentdemandrenewable;
+select * from "Comparison".percentdemandrenewable;
