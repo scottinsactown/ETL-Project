@@ -2,10 +2,6 @@
 --MUST BE RAN AFTER TABLES ARE FILLED!!!!!!!-----------------
 --###################################################################
 
-
-USE cali_energy_db;
-
-
 --altering houlrytotal table to have a total column
 alter table "Production".hourlytotal
 add column "TOTAL PRODUCTION" int;
@@ -55,6 +51,7 @@ update "Comparison".percentdemandrenewable
 set "Percent Demand Renew" = "Renewable Production" / "Total Demand";
 --make sure it worked 
 select * from "Comparison".percentdemandrenewable;
+select * from "Comparison".percentproductionrenewable;
 select * from "Production".hourlyrenewable;
 select * from "Production".hourlytotal;
 select * from "Demand".hourlydemand;

@@ -1,8 +1,5 @@
---Creating Database
-CREATE DATABASE cali_renewable_db;
 
 --Creating schemas for DB
-USE cali_renewable_db;
 CREATE SCHEMA "Production";
 
 CREATE SCHEMA "Demand";
@@ -11,7 +8,6 @@ CREATE SCHEMA "Comparison";
 
 -- Creating table for hourly renewable production data in Production schema 
 --then selecting from it after writing from pandas
-USE cali_energy_db;
 CREATE TABLE "Production".hourlyrenewable(
 	"timestamp" timestamp PRIMARY KEY,
 	"date" date not null,
