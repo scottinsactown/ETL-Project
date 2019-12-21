@@ -1,3 +1,10 @@
+--Creating schemas for DB
+CREATE SCHEMA "Production";
+
+CREATE SCHEMA "Demand";
+
+CREATE SCHEMA "Comparison";
+
 -- Creating table for hourly renewable production data in Production schema 
 --then selecting from it after writing from pandas
 
@@ -14,8 +21,10 @@ CREATE TABLE "Production".hourlyrenewable(
 	"BIOMASS" int,
 	"BIOGAS" int,
 	"SMALL HYDRO" int
-)
-select * from "Production".hourlyrenewable
+);
+
+
+select * from "Production".hourlyrenewable;
 
 
 --Creating table for hourly total production in Production schema 
@@ -29,7 +38,7 @@ CREATE TABLE "Production".hourlytotal(
 	"THERMAL" int,
 	"HYDRO" int
 );
-select * from "Production".hourlytotal
+select * from "Production".hourlytotal;
 
 --Creating table for hourly demand data in demand schema
 --select statement AFTER filling from jupyter notebook to check data
@@ -40,12 +49,20 @@ CREATE TABLE "Demand".hourlydemand(
     "DEMAND" int
 );
 
-select * from "Demand".hourlydemand
+select * from "Demand".hourlydemand;
 
 
 --###################################################################
 --MUST BE RAN AFTER TABLES ARE FILLED!!!!!!!-----------------
 --###################################################################
+
+--altering houlrytotal table to have a total column
+alter table "Production".hourlytotal
+add column "TOTAL PRODUCTION" int;
+--updating the newly made column to be the sum of the other columns
+update "Production".hourlytotal
+set "TOTAL PRODUCTION" = "RENEWABLES"+"NUCLEAR"+"THERMAL"+"HYDRO";
+
 
 --Creating table "percent production renewable"
 CREATE TABLE "Comparison".percentproductionrenewable(
@@ -54,12 +71,7 @@ CREATE TABLE "Comparison".percentproductionrenewable(
 	"Renewable Production" float,
 	"Percent Production Renew" float
 );
---altering houlrytotal table to have a total column
-alter table "Production".hourlytotal
-add column "TOTAL PRODUCTION" int;
---updating the newly made column to be the sum of the other columns
-update "Production".hourlytotal
-set "TOTAL PRODUCTION" = "RENEWABLES"+"NUCLEAR"+"THERMAL"+"HYDRO";
+
 --Using select statement to insert joined data into percent production table
 insert into "Comparison".percentproductionrenewable 
 	select r."timestamp" as "Date",
