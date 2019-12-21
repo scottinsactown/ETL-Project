@@ -8,7 +8,7 @@ import numpy as np
 
 app = Flask(__name__, static_folder='static')
 
-engine = create_engine('postgresql://{}:{}@localhost:5432/California_Energy_DB'.format(username, password))
+engine = create_engine('postgresql://{}:{}@localhost:5432/cali_renewable_db'.format(username, password))
 
 conn = engine.connect()
 
