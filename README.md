@@ -1,6 +1,6 @@
 # ETL-Project
 
-The goal of this project was to build out a comprehensive database for how energy flows in California.  We established a solid set of data on renewable energy in California with our first class project, but we wanted to continue to expand the work. We sought out additional ways to gather data based on the skills taught in class with three particular goals in mind: find renewable energy information for after 2017, incorporate non-renewable energy production data, and identify hourly demand data. 
+The goal of this project was to build out a comprehensive database for how energy flows in California.  We established a solid set of data on renewable energy in California in an earlierproject, and we wanted to continue to expand the work. We sought out additional ways to gather data based with three particular goals in mind: find more recent renewable energy information, incorporate non-renewable energy production data, and identify hourly demand data. 
 
 Execution Instructions
 -
@@ -9,7 +9,6 @@ Execution Instructions
 3. Run the two Jupyter notebooks in the CAISO SCRAPE folder
 4. Run seedings.sql in SQL folder to update tables and build comparison tables
 5. Run app.py in flask-api-app folder
-6. Enjoy! 
 
 Contents
 - 
