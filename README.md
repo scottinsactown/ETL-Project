@@ -1,6 +1,6 @@
 # ETL-Project
 
-The goal of this project was to build out a comprehensive database for how energy flows in California.  We established a solid set of data on renewable energy in California in an earlierproject, and we wanted to continue to expand the work. We sought out additional ways to gather data based with three particular goals in mind: find more recent renewable energy information, incorporate non-renewable energy production data, and identify hourly demand data. 
+The goal of this project was to build out a comprehensive database for how energy flows in California.  We established a solid set of data on renewable energy in California in an earlierproject, and we wanted to continue to expand the work using scraping, API, SQL, and Flask. We sought out additional ways to gather data based with three particular goals in mind: find more recent renewable energy information, incorporate non-renewable energy production data, and identify hourly demand data. 
 
 Execution Instructions
 -
